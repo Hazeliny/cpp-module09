@@ -16,6 +16,9 @@
 #include <fstream>
 #include <cstdlib>
 #include <map>
+#include <limits> // For std::numeric_limits
+#include <iomanip> // For std::setprecision
+#include <algorithm> // For std::max and std::min
 
 class BitcoinExchange
 {
@@ -75,6 +78,14 @@ class BitcoinExchange
                 virtual const char *what() const throw()
                 {
                     return ("Error: no date match!");
+                }
+        };
+        class EmptyMapException : public std::exception
+        {
+            public:
+                virtual const char *what() const throw()
+                {
+                    return ("Error: map is empty!");
                 }
         };
 };

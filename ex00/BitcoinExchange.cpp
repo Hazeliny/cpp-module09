@@ -171,25 +171,26 @@ void BitcoinExchange::getResult(std::string line) const
     date[7] = '-';
     float btcNum = strToFloat(line.substr(12));
     std::map<std::string, float>::const_iterator it = this->_map.lower_bound(date);
-    if (this->_map.empty())
-    {
-        std::cout << "Error: map is empty!" << std::endl;////////
-        return;
-    }
     try
-    { 
+    {
+        if (this->_map.empty())
+            throw BitcoinExchange::EmptyMapException(); 
         if (it == this->_map.end() || (it != this->_map.begin() && it->first != date))
             it--;
         else if (it == this->_map.begin() && it->first != date)
-        {
             throw BitcoinExchange::NoMatchDateException();
-        }
+    }
+    catch(BitcoinExchange::EmptyMapException &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return ;
     }
     catch(BitcoinExchange::NoMatchDateException &e)
     {
         std::cerr << e.what() << std::endl;
         return ;
     }
-    std::cout << it->first << " is the last date" << std::endl;
+    if (it->first != date)
+        std::cout << it->first << " is the last date" << std::endl;
     std::cout << date << " => " << std::fixed << std::setprecision(2) << btcNum << " = " << btcNum * it->second << std::endl;
 }
