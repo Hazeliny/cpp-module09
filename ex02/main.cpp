@@ -26,21 +26,23 @@ int main(int ac, char **av)
 
 	std::cout << "Before: ";
 	print(pm.getVec());
+//	print(pm.getDeq());
 
 	s_vec = clock();
 	mergeInsertSort(pm.getVec(), 0, pm.getVec().size() - 1, 5);
 	e_vec = clock();
-	time_vec = double(e_vec - s_vec) / CLOCKS_PER_SEC * 1000;
+	time_vec = double(e_vec - s_vec) / CLOCKS_PER_SEC * 1000000;
 
 	s_deq = clock();
 	mergeInsertSort(pm.getDeq(), 0, pm.getDeq().size() - 1, 5);
 	e_deq = clock();
-	time_deq = double(e_deq - s_deq) / CLOCKS_PER_SEC * 1000;
+	time_deq = double(e_deq - s_deq) / CLOCKS_PER_SEC * 1000000;
 
-	std::cout << std::fixed << std::setprecision(3) << "After: ";
+	std::cout << std::fixed << std::setprecision(6) << "After: ";
 	print(pm.getDeq());
-	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector: " << time_vec << " ms" << std::endl;
-	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque:  " << time_deq << " ms" << std::endl;
+//	print(pm.getVec());
+	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector: " << time_vec << " us" << std::endl;
+	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque:  " << time_deq << " us" << std::endl;
 		
 	return (0);
 }
